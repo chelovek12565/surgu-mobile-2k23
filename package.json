@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
+    "@vkontakte/icons": "^2.76.0",
+    "@vkontakte/vk-bridge": "^2.11.2",
+    "@vkontakte/vkui": "^5.9.6",
     "axios": "^1.5.1",
     "moment": "^2.29.4",
     "next": "13.5.4",

@@ -2,8 +2,6 @@ import styles from "../styles/auth.module.css";
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as userService from '../services/user.service';
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 export default function LoginPage() {
     const router = useRouter();
