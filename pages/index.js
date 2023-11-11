@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input } from "@vkontakte/vkui";
+import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button } from "@vkontakte/vkui";
 import { useRouter } from "next/router";
-import { Icon28Search, Icon28UserOutline, Icon36UserOutline  } from "@vkontakte/icons";
+import { Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
+import PageContent from "@/components/pageContent";
 
 function Home() {
   const router = useRouter();
   const [activePanel, setActivePanel] = React.useState('panel1');
   const [yourChats, setYourChats] = useState()
-  const [inputValue, setInputValue] = useState()
+  const [inputValue, setInputValue] = useState('')
 
   const TextChats = [
-    // {name: 'Хакатон', id: '1'},
-    // {name: 'Чат1', id: '1'},
-    // {name: 'Чат2', id: '1'},
-    // {name: 'Чат3', id: '1'},
+    {name: 'Хакатон', id: '1'},
+    {name: 'Чат1', id: '1'},
+    {name: 'Чат2', id: '1'},
+    {name: 'Чат3', id: '1'},
+  ]
+
+  const TextChatsYour = [
+    {name: 'Твой чат', id: '1'},
   ]
 
   const renderChats = (chats) => {
@@ -45,6 +50,7 @@ function Home() {
   const chats = [...getChats(TextChats)]
 
   return ( 
+    <PageContent>
     <div className="flex self-center flex-col items-center w-[100%]">
       <div className='w-full flex flex-col'>
         <div className="self-center">
@@ -58,15 +64,29 @@ function Home() {
         <div className="self-start">
           <h1 className="text-black text-xl font-semibold mt-2">Ваши чаты</h1>
         </div>
-          {TextChats.length !== 0 ? 
-          renderChats(TextChats)
+          {inputValue === '' ?
+          <div>
+            {TextChatsYour.length !== 0 ? 
+            renderChats(TextChatsYour)
+            :
+            <div>
+              <Placeholder
+                icon={<Icon56UsersOutline />}
+                header="Чаты организации"
+              >
+              Найдите чаты, в которых вы хотите принять участие
+              </Placeholder>
+          </div>
+          }
+          </div>
           :
           <div>
-            <h1 className="text-black">Чатов нет</h1>
+
           </div>
           }
         </div>
     </div>
+    </PageContent>
   )
 }
 
