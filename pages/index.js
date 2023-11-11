@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button, Div, SegmentedControl } from "@vkontakte/vkui";
+import React, { useEffect, useState } from "react";
+import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button } from "@vkontakte/vkui";
 import { useRouter } from "next/router";
 import { Icon12Add, Icon16GridOfFour, Icon20UserOutline, Icon20Users3Outline, Icon24List, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
 import PageContent from "@/components/pageContent";
@@ -10,6 +10,8 @@ import { FilterSearch } from "@/scripts/Filters";
 
 
 
+import { socket } from "../services/websocket.service";
+import { ConnectionManager } from "@/components/ConnectionManager";
 
 function Home() {
   const router = useRouter();
@@ -37,6 +39,16 @@ function Home() {
     {name: 'Твой чат3', id: '8', description: 'Крутой чат'},
     {name: 'Твой чат4', id: '9', description: 'Крутой чат'},
   ]
+
+  const renderChats = (chats) => {
+    return (
+      chats.map((chat)=> {
+        return (
+            <h1 className="text-gray-500">{chat.name}</h1>
+        )
+      })
+    )
+  }
 
   function Filter (arr) {
     return FilterSearch('name', inputValue, arr)
@@ -168,6 +180,7 @@ function Home() {
           </>
         }
     </div>
+    <ConnectionManager/>
     </PageContent>
   )
 }
