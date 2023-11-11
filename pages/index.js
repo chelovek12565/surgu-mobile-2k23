@@ -10,17 +10,17 @@ function Home() {
   const [inputValue, setInputValue] = useState()
 
   const TextChats = [
-    {name: 'Хакатон', id: '1'},
-    {name: 'Чат1', id: '1'},
-    {name: 'Чат2', id: '1'},
-    {name: 'Чат3', id: '1'},
+    // {name: 'Хакатон', id: '1'},
+    // {name: 'Чат1', id: '1'},
+    // {name: 'Чат2', id: '1'},
+    // {name: 'Чат3', id: '1'},
   ]
 
   const renderChats = (chats) => {
     return (
       chats.map((chat)=> {
         return (
-          <SimpleCell before={<h1 className="text-black">#</h1>}>
+          <SimpleCell before={<h1 className="text-text-main">#</h1>}>
             <h1 className="text-gray-500">{chat.name}</h1>
           </SimpleCell>
         )
@@ -39,6 +39,7 @@ function Home() {
 
   const getData = (val) => {
     setInputValue(val.target.value)
+    console.log(val.target.value)
   }
 
   const chats = [...getChats(TextChats)]
@@ -51,13 +52,19 @@ function Home() {
         </div>
         <div className="flex self-center">
           <FormItem className="w-[100vw] self-center" >
-            <Input before={<Icon28Search/>}/>
+            <Input onChange={getData} before={<Icon28Search/>}/>
           </FormItem>
         </div>
         <div className="self-start">
           <h1 className="text-black text-xl font-semibold mt-2">Ваши чаты</h1>
         </div>
-          {renderChats(TextChats)}
+          {TextChats.length !== 0 ? 
+          renderChats(TextChats)
+          :
+          <div>
+            <h1 className="text-black">Чатов нет</h1>
+          </div>
+          }
         </div>
     </div>
   )
