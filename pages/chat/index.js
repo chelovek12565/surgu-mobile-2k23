@@ -1,9 +1,8 @@
-import styles from "../styles/auth.module.css";
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import * as userService from '../services/user.service';
+import * as userService from '../../services/user.service';
 
-export default function LoginPage() {
+export default function ChatPage() {
     const router = useRouter();
 
     const { register, handleSubmit, formState } = useForm();
@@ -20,7 +19,7 @@ export default function LoginPage() {
 
     return(    
         <>
-        <div className="h-screen bg-primary py-[5%]">
+        <div className="h-screen py-[5%]">
             <div className="rounded-3xl bg-main-bg max-w-xl w-[80%] m-auto">
                 <h2 className="text-5xl text-center m-auto rounded-xl h-14 w-fit pt-5">Вход</h2>
                 <form onSubmit={(handleSubmit(onSubmit))} className="flex flex-col self-center rounded-xl w-[80%] m-auto">
