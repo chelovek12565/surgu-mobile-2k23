@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button } from "@vkontakte/vkui";
 import { useRouter } from "next/router";
-import { Icon12Add, Icon16GridOfFour, Icon20UserOutline, Icon20Users3Outline, Icon24List, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
+import { Icon12Add, Icon16GridOfFour, Icon20UserOutline, Icon20Users3Outline, Icon24List, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UserAddOutline, Icon56UsersOutline  } from "@vkontakte/icons";
 import PageContent from "@/components/pageContent";
 import Image from "next/image";
 import {SelectModal} from "@/components/SelectModal";
@@ -33,11 +33,11 @@ function Home() {
   ]
 
   const TextChatsLC = [
-    {name: 'Твой чат', id: '5', description: 'Крутой чат'},
-    {name: 'Твой чат1', id: '6', description: 'Крутой чат'},
-    {name: 'Твой чат2', id: '7', description: 'Крутой чат'},
-    {name: 'Твой чат3', id: '8', description: 'Крутой чат'},
-    {name: 'Твой чат4', id: '9', description: 'Крутой чат'},
+    // {name: 'Твой чат', id: '5', description: 'Крутой чат'},
+    // {name: 'Твой чат1', id: '6', description: 'Крутой чат'},
+    // {name: 'Твой чат2', id: '7', description: 'Крутой чат'},
+    // {name: 'Твой чат3', id: '8', description: 'Крутой чат'},
+    // {name: 'Твой чат4', id: '9', description: 'Крутой чат'},
   ]
 
   const renderChats = (chats) => {
@@ -100,11 +100,11 @@ function Home() {
               {TextChatsLC.length === 0 ?
               <div>
                 <Placeholder
-                  icon={<Icon56UsersOutline />}
-                  header="Уведомления от сообществ"
-                  action={<Button size="m">Подключить сообщества</Button>}
+                  icon={<Icon56UserAddOutline/>}
+                  header="Личные чаты"
+                  action={<Button onClick={() => router.push('/searchPage')} size="m">Найти или создать чат</Button>}
                 >
-                  Подключите сообщества, от которых Вы хотите получать уведомления
+                  Добавте чаты, в которых Вы хотите поринимать участие
                 </Placeholder>
               </div>
               :
