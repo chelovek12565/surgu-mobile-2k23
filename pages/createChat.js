@@ -8,7 +8,8 @@ function CreateChat() {
 
   return (
     <PageContent>
-      <div className='flex w-[100%] h-screen bg-black'>
+      <div className='flex w-[100%] h-screen bg-main items-center flex-col'>
+        <h1 className="text-black text-2xl font-sans">Создание чата</h1>
       </div>
     </PageContent>
   )

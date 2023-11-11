@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button } from "@vkontakte/vkui";
+import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button, Div, SegmentedControl } from "@vkontakte/vkui";
 import { useRouter } from "next/router";
-import { Icon12Add, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
+import { Icon12Add, Icon16GridOfFour, Icon20UserOutline, Icon20Users3Outline, Icon24List, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
 import PageContent from "@/components/pageContent";
+import {SelectModal} from "@/components/SelectModal";
+
 
 function Home() {
   const router = useRouter();
@@ -10,6 +12,9 @@ function Home() {
   const [yourChats, setYourChats] = useState()
   const [inputValue, setInputValue] = useState('')
   const [filtRes, setfiltRes] = useState()
+  const [selectorValue, setSelectorValue] = useState('YourChats')
+  const [modalVisible, setModalVisible] = useState(false)
+
 
   function FilterSearch (prop, value, arr) {
     let result = [],
@@ -22,22 +27,26 @@ function Home() {
     )
   }
 
-  const TextChats = [
+  const TextChatsGP = [
     {name: 'Хакатон', id: '1'},
     {name: 'Чат1', id: '1'},
     {name: 'Чат2', id: '1'},
     {name: 'Чат3', id: '1'},
   ]
 
-  const TextChatsYour = [
+  const TextChatsLC = [
     {name: 'Твой чат', id: '1'},
+    {name: 'Твой чат1', id: '1'},
+    {name: 'Твой чат2', id: '1'},
+    {name: 'Твой чат3', id: '1'},
+    {name: 'Твой чат4', id: '1'},
   ]
 
   const renderChats = (chats) => {
     return (
       chats.map((chat)=> {
         return (
-          <SimpleCell onClick={() => router.push('/chat')} before={<h1 className="text-text-main">#</h1>}>
+          <SimpleCell  onClick={() => router.push('/chat')} before={<h1 className="text-text-main">#</h1>}>
             <h1 className="text-gray-500">{chat.name}</h1>
           </SimpleCell>
         )
@@ -57,16 +66,20 @@ function Home() {
       description: user.screen_name,
   }));
 
+  const selectorChange = (val) => {
+    setSelectorValue(val)
+  }
 
   const getData = (val) => {
     setInputValue(val.target.value)
     console.log(val.target.value)
   }
 
-  const chats = [...getChats(TextChats)]
+  const chats = [...getChats(TextChatsGP)]
 
   return ( 
     <PageContent>
+    <SelectModal openState={modalVisible} setOpenState={setModalVisible}/>
     <div className="flex self-center flex-col items-center w-[100%]">
       <div className='w-full flex flex-col'>
         <div className="self-center">
@@ -74,49 +87,113 @@ function Home() {
         </div>
         <div className="flex self-center">
           <FormItem className="w-[100vw] self-center" >
-            <Input onChange={getData} before={<Icon28Search/>} after={<button><Icon28MessageAddBadgeOutline onClick={() => router.push('/createChat')}/></button>}/>
+            <Input onChange={getData} before={<Icon28Search/>} after={<button><Icon28MessageAddBadgeOutline onClick={() => setModalVisible(!modalVisible)}/></button>}/>
           </FormItem>
         </div>
-          {inputValue === '' ?
-          <div>
-            {TextChatsYour.length !== 0 ? 
-            <div>
-              <h1 className="text-black text-xl font-semibold mt-2">Ваши чаты</h1>
-              {renderChats(TextChatsYour)}
-            </div>
-            :
-            <div>
-              <Placeholder
-                icon={<Icon56UsersOutline />}
-                header="Чаты организации"
-              >
-              Найдите чаты, в которых вы хотите принять участие
-              </Placeholder>
-            </div>
-          }
-          </div>
-          :
-          <div>
-            {renderChats(Filter(TextChats)).length === 0 ?
-            <div>
-              <Placeholder
-                icon={<Icon56UsersOutline />}
-                header="Чаты организации"
-                action={<Button size="m">Создать чат</Button>}
-              >
-              Создайте чат, в котором вы хотите принять участие
-              </Placeholder>
-
-            </div>
-            :
-            <div>
-              <h1 className="text-black text-xl font-semibold mt-2">Все чаты</h1>
-              {renderChats(Filter(TextChats))}
-            </div>
-            }
-          </div>
-          }
+          <Div className="w-[100vw] self-center">
+          <SegmentedControl 
+            onChange={selectorChange}
+            options={[
+              {
+                'label': <Icon20UserOutline />,
+                'value': 'YourChats',
+                'aria-label': 'Список',
+              },
+              {
+                'label': <Icon20Users3Outline />,
+                'value': 'AllChats',
+                'aria-label': 'Плитки',
+              },
+            ]}
+          />
+          </Div>
         </div>
+        {selectorValue === 'YourChats' ? 
+          <>
+            {inputValue === '' ?
+            <div className="w-[100%]">
+              {TextChatsLC.length === 0 ?
+              <div>
+                <Placeholder
+                  icon={<Icon56UsersOutline />}
+                  header="Уведомления от сообществ"
+                  action={<Button size="m">Подключить сообщества</Button>}
+                >
+                  Подключите сообщества, от которых Вы хотите получать уведомления
+                </Placeholder>
+              </div>
+              :
+              <div>
+                <h1 className="text-black ml-2 text-xl font-semibold">Личные чаты</h1>
+                {renderChats(TextChatsLC)}
+              </div>
+              
+              }
+            </div>
+            :
+            <>
+              {Filter(TextChatsLC).length === 0 ? 
+              <div>
+                <Placeholder
+                  icon={<Icon56UsersOutline />}
+                  header="Уведомления от сообществ"
+                  action={<Button size="m">Подключить сообщества</Button>}
+                >
+                  Подключите сообщества, от которых Вы хотите получать уведомления
+                </Placeholder>
+              </div>
+              :
+              <div className="w-full">
+                <h1 className="text-black ml-2 text-xl font-semibold">Личные чаты</h1>
+                {renderChats(Filter(TextChatsLC))}
+              </div>
+              }
+            </>
+            }
+          </>
+          :
+          <>
+            {inputValue === '' ?
+            <div className="w-[100%]">
+              {TextChatsGP.length === 0 ?
+              <div>
+                <Placeholder
+                  icon={<Icon56UsersOutline />}
+                  header="Уведомления от сообществ"
+                  action={<Button size="m">Подключить сообщества</Button>}
+                >
+                  Подключите сообщества, от которых Вы хотите получать уведомления
+                </Placeholder>
+              </div>
+              :
+              <div>
+                <h1 className="text-black ml-2 text-xl font-semibold">Групповые чаты</h1>
+                {renderChats(TextChatsGP)}
+              </div>
+              }
+            </div>
+            :
+            <>
+              {Filter(TextChatsGP).length === 0 ? 
+              <div>
+                <Placeholder
+                  icon={<Icon56UsersOutline />}
+                  header="Уведомления от сообществ"
+                  action={<Button size="m">Подключить сообщества</Button>}
+                >
+                  Подключите сообщества, от которых Вы хотите получать уведомления
+                </Placeholder>
+              </div>
+              :
+              <div className="w-full">
+                <h1 className="text-black ml-2 text-xl font-semibold">Групповые чаты</h1>
+                {renderChats(Filter(TextChatsGP))}
+              </div>
+              }
+            </>
+            }
+          </>
+        }
     </div>
     </PageContent>
   )
