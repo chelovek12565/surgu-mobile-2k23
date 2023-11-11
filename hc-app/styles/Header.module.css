@@ -1,0 +1,143 @@
+.header {
+    position: relative;
+    min-width: 100%;
+    min-height: 100px;
+    left: 0px;
+    top: 0px;
+    background: #212931;
+    /* background: linear-gradient(85.27deg, #59BFB5 0%, #0094A8 100%), #0D90AA; */
+}
+
+.logo_bg{
+    display: block;
+    float: left;
+    background-color: white;
+    height: 141px;
+    width: 103px;
+    /* margin-left: 120px; */
+    align-content: center;
+    text-align: center;
+}
+
+.logo{
+    width: auto;
+    height: 90%;
+    padding-top: 6px;
+    /* align-self: center; */
+}
+
+.heading {
+    font-size: 2em;
+    letter-spacing: -1px;
+    flex: 1;
+    float: left; 
+    line-height: 32px;
+    width: 100%;
+    height: fit-content;
+    white-space: pre-line;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.container{
+    flex-wrap: wrap;
+    display: flex;
+    /* flex-direction: column; */
+    height: fit-content;
+    margin: auto;
+}
+
+.nav_list_element {
+    display: inline;
+    padding-left: 32px;
+    
+}
+
+.left_side_content {
+    display: flex;
+    flex: 2;
+}
+
+.input_field input{
+    height: 36px;
+}
+
+.right_side_content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    /* display: flex; */
+    align-self: start;
+    align-items: baseline;
+}
+
+.upper_header {
+    min-width: 70%;
+    margin: auto;
+    height: fit-content;
+    flex-wrap: wrap;
+    flex-flow: row;
+    display: flex;
+}
+
+/* .profile {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+} */
+
+.navbar {
+    flex: 1;
+    width: fit-content;
+    height: fit-content;
+}
+
+.navbar_list{
+    margin: 0px;
+    padding: 0px;
+}
+
+.heading_wrapper{
+    padding-left: 20px;
+    padding-top: 16px;
+    flex: 1;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.profile_photo {
+    background-color: rgb(255, 255, 255);
+    width: 3.5em;
+    height: 3.5em;
+    border-radius: 50px;
+}
+
+/* .profile_credentials{
+    flex: 3;
+    align-self: center;
+    display: table-row;
+    width: fit-content;
+} */
+
+.profile_credentials h3 {
+    float: right;
+    padding-right: 5px;
+    font-size: 1.5em;
+    font-style: normal;
+    font-weight: 400;
+    padding-top: 0.4em;
+    padding-right: 0.7em;
+}
+
+.searchQuery {
+    padding-top: 25px;
+}
+
+.searchQuery input{
+    height: 36px;
+    width: 238px;
+    float: right;
+}

@@ -1,0 +1,55 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 1000px;
+    /* margin-right: 120px; */
+    margin-left: 120px;
+    gap: 117px;
+}
+
+.main {
+    flex: 4;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 38px;
+
+}
+
+.info_block {
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+#about {
+
+}
+
+#lectures{
+
+}
+
+.sidebar {
+    background: #F1F5F9;
+    flex: 2;
+}
+
+.sidebar_content{
+    margin-left: 30px;
+    margin-right: 80px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.sidebar_content h2 {
+    font-family: 'Bahnschrift';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+}
