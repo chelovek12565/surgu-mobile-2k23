@@ -1,0 +1,55 @@
+.content{
+    width: 277px;
+    height: 103px;
+
+    background: #FFFFFF;
+    border-radius: 3px;
+}
+
+.month{
+    height: 33px;
+    width: 100%;
+    background: #0D90AA;
+    display: flex;
+}
+
+.month h3 {
+    height: fit-content;
+    font-weight: 350;
+    display: flex;
+    align-self: flex-end;
+    margin-left: 20px;
+}
+
+.day_time{
+    height: 70px;
+    display: flex;
+}
+
+.day {
+    margin-left: 20px;
+    float: left;
+    /* color: black; */
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 77px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+
+    color: #000000;
+}
+
+.time {
+    margin-left: 70px;
+    float: right;
+    display: flex;
+    font-weight: 350;
+    font-size: 20px;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+
+    color: rgba(0, 0, 0, 0.62);
+}

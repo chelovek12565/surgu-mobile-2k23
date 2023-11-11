@@ -1,0 +1,38 @@
+.bg{
+    filter: drop-shadow(0px 4px 21px rgba(0, 0, 0, 0.18));
+    background: #ffffff;
+    width: 224px;
+    height: 108px;
+}
+
+.content {
+    position: absolute;
+    width: 196px;
+    height: 68px;
+    margin: 20px 14px 20px 14px ;
+}
+
+.logo {
+    float: left;
+    width: 48px;
+    height: 100%;
+    margin-right: 18px;
+}
+
+.logo img {
+    height: 100%;
+    width: 100%;
+}
+
+.org_name{
+    float: right;
+    height: 100%;
+    width: 130px;
+    display: flex;
+}
+
+.org_name h4 {
+    color: #0D90AA;
+    display: flex;
+    align-items: center;
+}
