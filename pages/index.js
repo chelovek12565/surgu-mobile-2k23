@@ -3,7 +3,9 @@ import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Bu
 import { useRouter } from "next/router";
 import { Icon12Add, Icon16GridOfFour, Icon20UserOutline, Icon20Users3Outline, Icon24List, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
 import PageContent from "@/components/pageContent";
+import Image from "next/image";
 import {SelectModal} from "@/components/SelectModal";
+const  ChatAvatar = require('../assets/Ellipse92.png')
 
 
 function Home() {
@@ -28,26 +30,27 @@ function Home() {
   }
 
   const TextChatsGP = [
-    {name: 'Хакатон', id: '1'},
-    {name: 'Чат1', id: '1'},
-    {name: 'Чат2', id: '1'},
-    {name: 'Чат3', id: '1'},
+    {name: 'Хакатон', id: '1', description: 'Крутой чат'},
+    {name: 'Чат1', id: '1', description: 'Крутой чат'},
+    {name: 'Чат2', id: '1', description: 'Крутой чат'},
+    {name: 'Чат3', id: '1', description: 'Крутой чат'},
   ]
 
   const TextChatsLC = [
-    {name: 'Твой чат', id: '1'},
-    {name: 'Твой чат1', id: '1'},
-    {name: 'Твой чат2', id: '1'},
-    {name: 'Твой чат3', id: '1'},
-    {name: 'Твой чат4', id: '1'},
+    {name: 'Твой чат', id: '1', description: 'Крутой чат'},
+    {name: 'Твой чат1', id: '1', description: 'Крутой чат'},
+    {name: 'Твой чат2', id: '1', description: 'Крутой чат'},
+    {name: 'Твой чат3', id: '1', description: 'Крутой чат'},
+    {name: 'Твой чат4', id: '1', description: 'Крутой чат'},
   ]
 
   const renderChats = (chats) => {
     return (
       chats.map((chat)=> {
         return (
-          <SimpleCell  onClick={() => router.push('/chat')} before={<h1 className="text-text-main">#</h1>}>
-            <h1 className="text-gray-500">{chat.name}</h1>
+          <SimpleCell style={{borderRadius: 15}} borderRadiusMode={'auto'} className="bg-grey bg-opacity-5 flex my-3 rounded-2xl"  onClick={() => router.push('/chat')} before={<Image src={ChatAvatar} height={70}/>}>
+            <h1 className="text-lg font-semibold mb-0.25">{chat.name}</h1>
+            <h1 className="text-base font-normal text-grey">{chat.description}</h1>
           </SimpleCell>
         )
       })
@@ -100,7 +103,7 @@ function Home() {
                 'aria-label': 'Список',
               },
               {
-                'label': <Icon20Users3Outline />,
+                'label': <Icon20Users3Outline width={27} height={27} />,
                 'value': 'AllChats',
                 'aria-label': 'Плитки',
               },

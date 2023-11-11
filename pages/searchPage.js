@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import PageContent from "@/components/pageContent";
 import { Icon28ArrowLeftOutline, Icon28ArrowRightOutline } from "@vkontakte/icons";
 
-function CreateChat() {
+function searchPage () {
   const router = useRouter();
     
 
@@ -16,7 +16,7 @@ function CreateChat() {
               <Icon28ArrowLeftOutline/>
             </button>
           </div>
-          <h1 className="text-black text-2xl font-sans">Создание чата</h1>
+          <h1 className="text-black text-2xl font-sans">Поиск чата</h1>
         </div>
       </div>
     </PageContent>
@@ -25,4 +25,4 @@ function CreateChat() {
 
 
 
-export default CreateChat
+export default searchPage
