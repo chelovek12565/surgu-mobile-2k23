@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button } from "@vkontakte/vkui";
 import { useRouter } from "next/router";
-import { Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
+import { Icon12Add, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UsersOutline  } from "@vkontakte/icons";
 import PageContent from "@/components/pageContent";
 
 function Home() {
@@ -9,6 +9,18 @@ function Home() {
   const [activePanel, setActivePanel] = React.useState('panel1');
   const [yourChats, setYourChats] = useState()
   const [inputValue, setInputValue] = useState('')
+  const [filtRes, setfiltRes] = useState()
+
+  function FilterSearch (prop, value, arr) {
+    let result = [],
+        copy = [...arr]
+    for (const event of copy) {
+        if (((String(event[prop]).toLowerCase())).includes(value.toLowerCase()) === true) result.push(event)
+    }
+    return (
+        result
+    )
+  }
 
   const TextChats = [
     {name: 'Хакатон', id: '1'},
@@ -25,12 +37,16 @@ function Home() {
     return (
       chats.map((chat)=> {
         return (
-          <SimpleCell before={<h1 className="text-text-main">#</h1>}>
+          <SimpleCell onClick={() => router.push('/chat')} before={<h1 className="text-text-main">#</h1>}>
             <h1 className="text-gray-500">{chat.name}</h1>
           </SimpleCell>
         )
       })
     )
+  }
+
+  function Filter (arr) {
+    return FilterSearch('name', inputValue, arr)
   }
 
   const getChats = (chatsArray) =>
@@ -58,16 +74,16 @@ function Home() {
         </div>
         <div className="flex self-center">
           <FormItem className="w-[100vw] self-center" >
-            <Input onChange={getData} before={<Icon28Search/>}/>
+            <Input onChange={getData} before={<Icon28Search/>} after={<button><Icon28MessageAddBadgeOutline onClick={() => router.push('/createChat')}/></button>}/>
           </FormItem>
-        </div>
-        <div className="self-start">
-          <h1 className="text-black text-xl font-semibold mt-2">Ваши чаты</h1>
         </div>
           {inputValue === '' ?
           <div>
             {TextChatsYour.length !== 0 ? 
-            renderChats(TextChatsYour)
+            <div>
+              <h1 className="text-black text-xl font-semibold mt-2">Ваши чаты</h1>
+              {renderChats(TextChatsYour)}
+            </div>
             :
             <div>
               <Placeholder
@@ -76,12 +92,28 @@ function Home() {
               >
               Найдите чаты, в которых вы хотите принять участие
               </Placeholder>
-          </div>
+            </div>
           }
           </div>
           :
           <div>
+            {renderChats(Filter(TextChats)).length === 0 ?
+            <div>
+              <Placeholder
+                icon={<Icon56UsersOutline />}
+                header="Чаты организации"
+                action={<Button size="m">Создать чат</Button>}
+              >
+              Создайте чат, в котором вы хотите принять участие
+              </Placeholder>
 
+            </div>
+            :
+            <div>
+              <h1 className="text-black text-xl font-semibold mt-2">Все чаты</h1>
+              {renderChats(Filter(TextChats))}
+            </div>
+            }
           </div>
           }
         </div>
