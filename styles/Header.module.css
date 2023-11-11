@@ -1,10 +1,10 @@
 .header {
     position: relative;
     min-width: 100%;
-    min-height: 100px;
+    min-height: 10px;
     left: 0px;
     top: 0px;
-    background: #212931;
+    /* background: #212931; */
     /* background: linear-gradient(85.27deg, #59BFB5 0%, #0094A8 100%), #0D90AA; */
 }
 

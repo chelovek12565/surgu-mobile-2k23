@@ -9,10 +9,17 @@ const userCredentials = {
     name: "Дмитрий ", 
 };
 
-const HeaderComponents = () => {
+const HeaderComponents = ({before, after, title}) => {
     return(
-    <div className='item-center justify-center w-[100vw] h-[10vh]' >
+    <div className='justify-center w-[100vw] h-[7vh] shadow-inner rounded-sm bg-main' >
+        <div className=" shadow-md w-full h-full content-baseline flex">
+            <div className="flex justify-between align-middle self-center items-center w-full mx-5">
+                <div>{before}</div>
+                <h1 className=" self-center text-[5rem] ">{title}</h1>
+                <div>{after}</div>
+            </div>
 
+        </div>
     </div>
         
     )

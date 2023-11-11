@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as userService from '../../services/user.service';
 import Header from '@/components/Header';
+import HeaderComponents from '@/components/HeaderComponents';
 
 export default function ChatPage() {
     const router = useRouter();
@@ -20,13 +21,10 @@ export default function ChatPage() {
 
     return(    
         <>
-        <Header></Header>
-        <div className="h-screen py-[5%] bg-black">
-            <div className="rounded-3xl bg-main-bg max-w-xl w-[80%] m-auto">
-                
-            </div>
+        <HeaderComponents title={'132'}></HeaderComponents>
+        {/* <div className="h-screen py-[5%] bg-main">
             
-        </div>
+        </div> */}
         </>
         )
 }
