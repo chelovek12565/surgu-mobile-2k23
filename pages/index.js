@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Cell, CustomSelect, FormItem, Group } from "@vkontakte/vkui";
+import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input } from "@vkontakte/vkui";
 import { useRouter } from "next/router";
-import { Icon28UserOutline, Icon36UserOutline } from "@vkontakte/icons";
+import { Icon28Search, Icon28UserOutline, Icon36UserOutline  } from "@vkontakte/icons";
 
 function Home() {
   const router = useRouter();
@@ -10,15 +10,30 @@ function Home() {
   const [inputValue, setInputValue] = useState()
 
   const TextChats = [
-    {name: 'Хакатон', id: '1'}
+    {name: 'Хакатон', id: '1'},
+    {name: 'Чат1', id: '1'},
+    {name: 'Чат2', id: '1'},
+    {name: 'Чат3', id: '1'},
   ]
 
+  const renderChats = (chats) => {
+    return (
+      chats.map((chat)=> {
+        return (
+          <SimpleCell before={<h1 className="text-black">#</h1>}>
+            <h1 className="text-gray-500">{chat.name}</h1>
+          </SimpleCell>
+        )
+      })
+    )
+  }
+
   const getChats = (chatsArray) =>
-  chatsArray.map((user) => ({
-    label: user.name,
-    value: `${user.id}`,
-    avatar: user.photo_100,
-    description: user.screen_name,
+    chatsArray.map((user) => ({
+      label: user.name,
+      value: `${user.id}`,
+      avatar: user.photo_100,
+      description: user.screen_name,
   }));
 
 
@@ -34,20 +49,15 @@ function Home() {
         <div className="self-center">
           <h1 className=" text-black text-2xl font-bold">Чаты</h1>
         </div>
-        <div className='w-full'>
-          <FormItem top="Поиск по чатам">
-            <CustomSelect placeholder="Введите название чатов" searchable options={chats} onChange={getData} />
+        <div className="flex self-center">
+          <FormItem className="w-[100vw] self-center" >
+            <Input before={<Icon28Search/>}/>
           </FormItem>
         </div>
-        {inputValue ? 
-        <div>
-          
+        <div className="self-start">
+          <h1 className="text-black text-xl font-semibold mt-2">Ваши чаты</h1>
         </div>
-        :
-        <div>
-          
-        </div>
-        }
+          {renderChats(TextChats)}
         </div>
     </div>
   )
