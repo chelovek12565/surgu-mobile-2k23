@@ -1,5 +1,5 @@
-import { Icon20PlaceOutline, Icon20PlaneOutline } from "@vkontakte/icons";
-import { Button } from "@vkontakte/vkui";
+import { Icon16AddSquareOutline, Icon20PlaceOutline, Icon20PlaneOutline, Icon28PaperplaneOutline } from "@vkontakte/icons";
+import { Button, Input } from "@vkontakte/vkui";
 import { useState } from "react";
 
 
@@ -19,9 +19,9 @@ export default function ChatInput({onSubmit = (text) => {}})
   }
 
   return(
-    <div className="h-[6vh] bg-black justify-self-end align-bottom w-full flex justify-between border-[1px] border-gray-300 rounded-t-md">
-      <input onInput={readInput} value={input} type="text" className="h-full flex-1 pl-5"></input>
-      <button onClick={() => {clearField(); onSubmit(input)}} className="h-full w-16 bg-white"><Icon20PlaneOutline/></button>
+    <div className="h-auto fixed bottom-0 w-[100vw] ">
+      <Input onInput={readInput} before={<button><Icon16AddSquareOutline width={30} height={30}/></button>} value={input} type="text" after={<button onClick={() => {clearField(); onSubmit(input)}}><Icon28PaperplaneOutline/></button>} className=" my-23 bg-[#D9D9D9]"></Input>
+      
     </div>
   )
 }

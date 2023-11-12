@@ -1,7 +1,7 @@
 import React, { useEffect, useState }  from "react"
 import { useRouter } from "next/router";
 import PageContent from "@/components/pageContent";
-import { Icon24Filter, Icon28ArrowLeftOutline, Icon28ArrowRightOutline } from "@vkontakte/icons";
+import { Icon24Filter, Icon28ArrowLeftOutline, Icon28ArrowRightOutline, Icon56UsersOutline } from "@vkontakte/icons";
 import { FormItem, Input, Placeholder } from "@vkontakte/vkui";
 import { Icon28Search } from "@vkontakte/icons";
 import { FilterPopup } from "@/components/FilterPopup";
@@ -10,7 +10,7 @@ import { FilterSearch } from "@/scripts/Filters";
 
 function searchPage () {
   const router = useRouter();
-  const [inputValue, setInputValue] = useState('f')
+  const [inputValue, setInputValue] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
     
   const getData = (val) => {
@@ -56,7 +56,12 @@ function searchPage () {
           <div>
             {AllChats.length === 0 ?
             <div>
-              <h1>Placeholder</h1>
+              <Placeholder
+                icon={<Icon56UsersOutline />}
+                header="Групповые чаты"
+              >
+                Чаты не найдены
+              </Placeholder>
             </div>
             :
             <div>
@@ -68,7 +73,12 @@ function searchPage () {
           <div>
             {Filter(AllChats).length === 0 ?
             <div>
-              <h1>Placeholder</h1>
+              <Placeholder
+                icon={<Icon56UsersOutline />}
+                header="Групповые чаты"
+              >
+                По данным фильтрам чаты не найдены
+              </Placeholder>
             </div>
             :
             <div>

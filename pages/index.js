@@ -63,6 +63,25 @@ function Home() {
             <Input onChange={getData} before={<Icon28Search/>} after={<button><Icon28MessageAddBadgeOutline onClick={() => setModalVisible(!modalVisible)}/></button>}/>
           </FormItem>
         </div>
+        <div className="flex flex-col">
+          <h1 className="text-xl mb-2">Ваши задания</h1>
+          <button className="w-[95%] bg-grey bg-opacity-10 flex flex-row items-center self-center justify-center rounded-2xl">
+            <h1>#</h1>
+            <div className="mx-4 my-4">
+              <h1 className="text-xl font-semibold" >Digital Chalange</h1>
+              <h1>Забрать на уверенности этот Хакатон</h1>
+              <h1>Дата создания 6.11.2023</h1>
+            </div>
+          </button>
+          <div className="w-[95%] bg-grey bg-opacity-10 flex flex-row items-center self-center justify-center rounded-2xl mt-2">
+            <h1>#</h1>
+            <button onClick={() => router.push('/Tasks')} className="mx-4 my-4">
+              <h1 className="text-xl font-semibold" >SurGu Mobile</h1>
+              <h1>Забрать на уверенности этот Хакатон</h1>
+              <h1>Дата создания 6.11.2023</h1>
+            </button>
+          </div>
+        </div>
           <Div className="w-[100vw] self-center">
           <SegmentedControl 
             onChange={selectorChange}
@@ -151,10 +170,10 @@ function Home() {
               <div>
                 <Placeholder
                   icon={<Icon56UsersOutline />}
-                  header="Уведомления от сообществ"
-                  action={<Button size="m">Подключить сообщества</Button>}
+                  header="Групповые чаты"
+                  action={<Button onClick={() => router.push('/searchPage')} size="m">Искать чаты</Button>}
                 >
-                  Подключите сообщества, от которых Вы хотите получать уведомления
+                  Найдите групповые чаты, от которых Вы хотите получать уведомления
                 </Placeholder>
               </div>
               :

@@ -11,6 +11,7 @@ export function SelectModal ({openState, setOpenState}) {
 
   return (
     <Modal
+      
       isOpen={openState}
       onRequestClose={() => setOpenState(!openState)}
       shouldCloseOnOverlayClick={true}

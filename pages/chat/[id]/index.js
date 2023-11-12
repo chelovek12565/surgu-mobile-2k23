@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import HeaderComponents from '@/components/HeaderComponents';
-import { Icon16ChevronLeft, Icon20Info } from '@vkontakte/icons';
+import { Icon16ArticleOutline, Icon16ChevronLeft, Icon20Info, Icon28ArrowLeftOutline } from '@vkontakte/icons';
 import ChatInput from '@/components/ChatInput';
 import { ChatMessage } from '@/components/ChatMessage';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -11,6 +11,7 @@ import { Button, Input } from '@vkontakte/vkui';
 
 import { authUser, connectToChat, connectToSocket, createChat, sendMsg, socket } from '@/services/websocket.service';
 import { getUserByToken } from '@/services/user.service';
+import { HeaderModal } from '@/components/HeaderModal';
 
 
 export default function ChatPage() {
@@ -118,19 +119,23 @@ export default function ChatPage() {
 
     return(    
       <div className=' w-full h-screen flex flex-col'>
-        <HeaderComponents title={'132'} 
+        <HeaderComponents 
+        
         before={
           <div className=' flex flex-row content-baseline align-middle items-center '>
-            <Icon16ChevronLeft/>
+            <button onClick={() => router.back()}>
+              <Icon28ArrowLeftOutline/>
+            </button>
             <div className='ml-10'>
-              <h1>Чат1</h1>
+              <h1>Digital Chalenge</h1>
+              <h1 className='text-sm text-gray'>открытая группа, 8 участников</h1>
             </div>
           </div>
         }
         after={
-          <div>
-            <Icon20Info/>
-          </div>
+          <button onClick={() => router.push('/chatSettings')}>
+            <Icon16ArticleOutline width={35} height={35}/>
+          </button>
         }
         ></HeaderComponents>
         {/* <div className='fixed top-24 left-0 w-full'>
@@ -183,7 +188,17 @@ export default function ChatPage() {
                 direction: 'outgoing',
                 position: "normal",
             }}
-            /> 
+            >
+
+
+             
+              {/* <Message.HtmlContent html='
+              <div>
+                <button>Open<button>
+              </div>
+              
+              '/> */}
+              </Message> 
                         <Message
               model={{
                 message: "Hello my friend",
@@ -325,7 +340,97 @@ export default function ChatPage() {
           direction: 'incoming',
           position: "normal",
       }}
-      /> 
+      />       <Message
+      model={{
+        message: "Hello my friend",
+        direction: 'incoming',
+        position: "normal",
+    }}
+    />       <Message
+    model={{
+      message: "Hello my friend",
+      direction: 'incoming',
+      position: "normal",
+  }}
+  />       <Message
+  model={{
+    message: "Hello my friend",
+    direction: 'incoming',
+    position: "normal",
+}}
+/>       <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      />       <Message
+      model={{
+        message: "Hello my friend",
+        direction: 'incoming',
+        position: "normal",
+    }}
+    />       <Message
+    model={{
+      message: "Hello my friend",
+      direction: 'incoming',
+      position: "normal",
+  }}
+  />       <Message
+  model={{
+    message: "Hello my friend",
+    direction: 'incoming',
+    position: "normal",
+}}
+/>       <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      />       <Message
+      model={{
+        message: "Hello my friend",
+        direction: 'incoming',
+        position: "normal",
+    }}
+    />       <Message
+    model={{
+      message: "Hello my friend",
+      direction: 'incoming',
+      position: "normal",
+  }}
+  />       <Message
+  model={{
+    message: "Hello my friend",
+    direction: 'incoming',
+    position: "normal",
+}}
+/>       <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      />       <Message
+      model={{
+        message: "Hello my friend",
+        direction: 'incoming',
+        position: "normal",
+    }}
+    />       <Message
+    model={{
+      message: "Hello my friend",
+      direction: 'incoming',
+      position: "normal",
+  }}
+  />       <Message
+  model={{
+    message: "Hello my friend",
+    direction: 'incoming',
+    position: "normal",
+}}
+/> 
             
             
              {/* <Message.Header sender="Dmitriy" sentTime="just now" />
@@ -345,9 +450,9 @@ export default function ChatPage() {
 
           </InfiniteScroll> 
         </div>
-
-        <ChatInput onSubmit={sendMessage}/>
-
+        <div>
+          <ChatInput onSubmit={sendMessage}/>
+        </div>
       </div>
         )
 }
