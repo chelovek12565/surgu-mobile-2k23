@@ -59,7 +59,7 @@ function chatSettings () {
 
   return (
     <PageContent>
-      <EditPopup openState={modalVisible} setOpenState={setModalVisible} groupName={groupName} setGroupName={setGroupName}/>
+      <EditPopup openState={modalVisible} setOpenState={setModalVisible} groupName={groupName} setGroupName={setGroupName} />
       <div className='flex w-[100%] h-screen items-center flex-col'>
         <div className="absolute left-3 -top-2.5">
           <button className='p-4' onClick={() => router.back()}>

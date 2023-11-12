@@ -7,7 +7,7 @@ import Modal from 'react-modal'
 import InputField from "./InputField";
 
 
-export function EditPopup ({openState, setOpenState, groupName, setGroupName}) {
+export function EditPopup ({openState, setOpenState, groupName, setGroupName }) {
 
   const [inputNameValid, setInputNameValid] = useState('')
 
