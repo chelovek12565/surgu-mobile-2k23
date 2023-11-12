@@ -10,7 +10,7 @@ import { FilterSearch } from "@/scripts/Filters";
 
 function searchPage () {
   const router = useRouter();
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState('f')
   const [modalVisible, setModalVisible] = useState(false)
     
   const getData = (val) => {
