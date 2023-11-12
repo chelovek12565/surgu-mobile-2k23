@@ -15,6 +15,10 @@ function ResetPassword() {
   const [isToken, setState] = useState(false)
   const [error, setError] = useState('')
 
+  useEffect(() => {
+    if(userService.checkLogin() === false) 
+      router.push('/auth')
+  }, [])
 
   const { register, handleSubmit, formState } = useForm();
   

@@ -3,6 +3,7 @@ import '../styles/globals.css'
 import '@vkontakte/vkui/dist/vkui.css';
 import { ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import { checkLogin } from '@/services/user.service';
 
  const App = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => <Layout>{page}</Layout>)

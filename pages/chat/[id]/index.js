@@ -9,14 +9,18 @@ import { useEffect, useState } from 'react';
 import { Avatar, Message, MessageList, MessageSeparator, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 import { Button, Input } from '@vkontakte/vkui';
 
-import { authUser, connectToChat, connectToSocket, createChat, sendMsg, socket } from '@/services/websocket.service';
-import { getUserByToken } from '@/services/user.service';
+import { authUser, connectToChat, connectToSocket, createChat, disconnectFromSocket, sendMsg, socket } from '@/services/websocket.service';
+import { checkLogin, getToken, getUserByToken } from '@/services/user.service';
 
 
 export default function ChatPage() {
   const router = useRouter();
 
-  const { register, handleSubmit, formState } = useForm();
+  useEffect(() => {
+    if(checkLogin() === false) 
+      router.push('/auth')
+  }, [])
+  
   const [messages, setMessages] = useState([])
   const [hasMore, setMore] = useState(true)
   const [token, setToken] = useState()
@@ -34,7 +38,7 @@ export default function ChatPage() {
     console.log(chatId)
     if(chatId)
     {
-      connect('9117492c-1f6e-4dba-9265-e524fa203b9c')
+      connect(getToken())
     }
    }, [chatId])
 
@@ -44,13 +48,15 @@ export default function ChatPage() {
     const user = await getUserByToken(token)
     setUser(user)
     console.log(user)
+    socket.connect();
+
 
   }
 
   useEffect(()=> {
-    
-    // if(token !== undefined)
-    //   connectToSocket()
+    disconnectFromSocket()
+    if(token !== undefined)
+      connectToSocket()
 
   }, [token])
 
@@ -88,11 +94,12 @@ export default function ChatPage() {
     async function connect(token)
     {
 
-      //could be uncommented
-      // await fetchUser(token)
-      // await authUser(token)
+      // could be uncommented
+      // connectToChat()
+      await fetchUser(token)
+      await authUser(token)
       // await createChat()
-      // connectToChat(token, 2)
+      connectToChat(token, chatId)
     }
 
     async function sendMessage(message)
@@ -133,13 +140,7 @@ export default function ChatPage() {
           </div>
         }
         ></HeaderComponents>
-        {/* <div className='fixed top-24 left-0 w-full'>
-          <Input placeholder='token' onChange={(e) => setToken(e.currentTarget.value)} value={token}></Input>
-          <Button onClick={() => {connect(token)}}>auth</Button>
-          <Button onClick={() => {socket.connect()}}>connect</Button>
-          <Button onClick={() => {socket.disconnect()}}>disconn</Button>
 
-        </div> */}
         <div
           id="scrollableDiv"
           style={{
@@ -161,7 +162,7 @@ export default function ChatPage() {
             scrollableTarget="scrollableDiv"
           >
             <br/>
-            <TypingIndicator />
+            {/* <TypingIndicator /> */}
             <br/>
             {[...messages]?.reverse().map(msg => 
               {return(
@@ -170,178 +171,11 @@ export default function ChatPage() {
                 model={{
                   message: msg.text,
                   direction: msg.user_id === user?.id ? 'outgoing' : 'incoming',
-                  position: "normal",
               }}
               > 
-               <Message.Header sender={msg.username} sentTime="just now" />
-                <Avatar src={'https://sun3-9.userapi.com/s/v1/ig2/QoqNWliOUCe5OTTDC7XSJi06pvDDpCZV1dPlarKNFTEM29XsBz6axCGDWrNi5bS0YYFXYtRdPaOKFR1_2uVq6JMV.jpg?size=200x200&quality=95&crop=159,392,598,598&ava=1'}/>
+                <Message.Header sender="Emily" sentTime="just now" />
               </Message>
               )})}
-            <Message
-              model={{
-                message: "Hello my friend",
-                direction: 'outgoing',
-                position: "normal",
-            }}
-            /> 
-                        <Message
-              model={{
-                message: "Hello my friend",
-                direction: 'outgoing',
-                position: "normal",
-            }}
-            /> 
-                        <Message
-              model={{
-                message: "Hello my friend",
-                direction: 'outgoing',
-                position: "normal",
-            }}
-            /> 
-                        <Message
-              model={{
-                message: "Hello my friend",
-                direction: 'outgoing',
-                position: "normal",
-            }}
-            /> 
-                        <Message
-              model={{
-                message: "Hello my friend",
-                direction: 'outgoing',
-                position: "normal",
-            }}
-            /> 
-                        <Message
-              model={{
-                message: "Hello my friend",
-                direction: 'outgoing',
-                position: "normal",
-            }}
-            /> 
-                                    <Message
-              model={{
-                message: "Hello my friend",
-                direction: 'incoming',
-                position: "normal",
-            
-              }}></Message>                       
-          <Message
-            model={{
-              message: "Hello my friend",
-              direction: 'outgoing',
-              position: "normal",
-          }}
-          /> 
-                                  <Message
-            model={{
-              message: "Hello my friend",
-              direction: 'incoming',
-              position: "normal",
-          }}
-          />                         <Message
-          model={{
-            message: "Hello my friend",
-            direction: 'outgoing',
-            position: "normal",
-        }}
-        /> 
-                                <Message
-          model={{
-            message: "Hello my friend",
-            direction: 'incoming',
-            position: "normal",
-        }}
-        />                        
-       <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'outgoing',
-          position: "normal",
-      }}
-      /> 
-      <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'incoming',
-          position: "normal",
-      }}
-      /> 
-             <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'outgoing',
-          position: "normal",
-      }}
-      /> 
-      <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'incoming',
-          position: "normal",
-      }}
-      /> 
-            
-            <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'outgoing',
-          position: "normal",
-      }}
-      /> 
-      <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'incoming',
-          position: "normal",
-      }}
-      /> 
-            
-            <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'outgoing',
-          position: "normal",
-      }}
-      /> 
-      <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'incoming',
-          position: "normal",
-      }}
-      /> 
-            
-            <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'outgoing',
-          position: "normal",
-      }}
-      /> 
-      <Message
-        model={{
-          message: "Hello my friend",
-          direction: 'incoming',
-          position: "normal",
-      }}
-      /> 
-            
-            
-             {/* <Message.Header sender="Dmitriy" sentTime="just now" />
-              <Avatar src={'https://sun3-9.userapi.com/s/v1/ig2/QoqNWliOUCe5OTTDC7XSJi06pvDDpCZV1dPlarKNFTEM29XsBz6axCGDWrNi5bS0YYFXYtRdPaOKFR1_2uVq6JMV.jpg?size=200x200&quality=95&crop=159,392,598,598&ava=1'}/>
-            </Message>
-
-            <Message
-              model={{
-                message: "Hello my friend",
-                position: "normal",
-            }}
-            
-            > 
-             <Message.Header sender="Dmitriy Vovchinskiy"/>
-              <Avatar src={'https://sun3-9.userapi.com/s/v1/ig2/QoqNWliOUCe5OTTDC7XSJi06pvDDpCZV1dPlarKNFTEM29XsBz6axCGDWrNi5bS0YYFXYtRdPaOKFR1_2uVq6JMV.jpg?size=200x200&quality=95&crop=159,392,598,598&ava=1'}/>
-            </Message> */}
 
           </InfiniteScroll> 
         </div>

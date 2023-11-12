@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import PageContent from "@/components/pageContent";
 import { Icon28ArrowLeftOutline, Icon28ArrowRightOutline } from "@vkontakte/icons";
 import { Avatar, Button, FormItem, HorizontalCell, HorizontalScroll, Input, SegmentedControl, Select } from "@vkontakte/vkui";
+import { checkLogin } from "@/services/user.service";
+import { createChat } from "@/services/websocket.service";
 
 
 function CreateChat() {
@@ -16,6 +18,11 @@ function CreateChat() {
   const [selectedIcon, setSelectedIcon] = useState('')
   const [projectState, setProjectState] = useState('')
   const [projectEror, setProjectError] = useState('error')
+
+  useEffect(() => {
+    if(checkLogin() === false) 
+      router.push('/auth')
+  }, [])
 
   useEffect(() => {
     if (inputName.trim() === '') {
@@ -143,7 +150,7 @@ function CreateChat() {
             </div>
         </div>
         <div className="mt-20">
-          <Button>
+          <Button onClick={() => {createChat(inputName, [1]); router.back()}}>
             <h1 className="mx-28 my-3 text-main">Создать чат</h1>
           </Button>
         </div>

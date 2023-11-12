@@ -5,20 +5,28 @@ import * as userService from '../services/user.service';
 import Image from "next/image";
 import PM from '../assets/projectManager.png'
 import { Button, Input } from "@vkontakte/vkui";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { register, handleSubmit, formState } = useForm();
+  const [token, setToken] = useState('')
 
-  async function onSubmit({ email, password }) {
-  // console.log(email +' p:' + password)
-  let res = await userService.Login({email: email, password: password})
-  
-  if(res)
-    {
-      router.push("/")
-      router.reload()
-    }
+  useEffect(() => {
+    if(userService.checkLogin()) 
+      router.push('/')
+  }, [])
+
+  function onChange(e)
+  {
+    setToken(e.currentTarget.value)
+  }
+
+  function auth()
+  {
+    console.log(userService.getToken())
+    console.log(userService.checkLogin())
+    if(userService.auth(token))
+      router.push('/')
   }
 
   return(    
@@ -30,9 +38,9 @@ export default function LoginPage() {
         <div className="self-start ml-10 mt-[5vh] mb-[6vh]">
           <h1 className="text-3xl font-bold">Войти по токену</h1>
         </div>
-        <Input className="bg-grey rounded-2xl opacity-15 w-[80vw] h-[20vh]"/>
+        <Input onChange={onChange} value={token} className="bg-grey rounded-2xl opacity-15 w-[80vw] h-[20vh]"/>
         <div className="w-[100vw] flex justify-center mt-10">
-          <Button onClick={() => router.push('/')} >
+          <Button onClick={auth} >
             <h1 className="text-main mx-[32vw] my-4">Вход</h1>
           </Button>
         </div>

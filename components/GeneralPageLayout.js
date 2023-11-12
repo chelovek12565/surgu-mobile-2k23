@@ -1,4 +1,6 @@
+import { checkLogin } from '@/services/user.service';
 import { ConfigProvider, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
  
 export default function Layout({ children }) {
