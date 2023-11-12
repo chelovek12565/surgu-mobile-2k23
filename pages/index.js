@@ -50,7 +50,7 @@ function Home() {
   async function fetchChats()
   {
     const user = await getUserByToken(getToken())
-    const chatsIds = await getChatsForUser(1)
+    const chatsIds = await getChatsForUser(user.id)
     console.log(chatsIds)
     // console.log(await getChatsForUser(user.id))
     setGroupChats(prev => prev.concat(chatsIds))
