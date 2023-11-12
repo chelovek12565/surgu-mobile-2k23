@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Cell, CustomSelect, FormItem, Group, SimpleCell, Input, Placeholder, Button, Div, SegmentedControl } from "@vkontakte/vkui";
 import { useRouter } from "next/router";
 import { Icon12Add, Icon16GridOfFour, Icon20UserOutline, Icon20Users3Outline, Icon24List, Icon28ChatsOutline, Icon28MessageAddBadgeOutline, Icon28Search, Icon28UserOutline, Icon36UserOutline, Icon56UserAddOutline, Icon56UsersOutline  } from "@vkontakte/icons";
@@ -7,28 +7,37 @@ import Image from "next/image";
 import {SelectModal} from "@/components/SelectModal";
 import renderChats from "@/scripts/renderChats";
 import { FilterSearch } from "@/scripts/Filters";
+import { checkLogin, getToken, getUserByToken } from "@/services/user.service";
+import { getChatById, getChatsForUser, getUserChats } from "@/services/chat.service";
 
 
 
 
 function Home() {
   const router = useRouter();
-  const [activePanel, setActivePanel] = React.useState('panel1');
-  const [yourChats, setYourChats] = useState()
   const [inputValue, setInputValue] = useState('')
-  const [filtRes, setfiltRes] = useState()
   const [selectorValue, setSelectorValue] = useState('YourChats')
   const [modalVisible, setModalVisible] = useState(false)
 
 
+  useEffect(() => {
+    if(checkLogin() === false) 
+    {
+      router.push('/auth')
+      return
+    }
+    fetchChats()
+
+    
+  }, [])
 
 
-  const TextChatsGP = [
-    {name: 'Хакатон', id: '1', description: 'Крутой чат'},
-    {name: 'Чат1', id: '2', description: 'Крутой чат'},
-    {name: 'Чат2', id: '3', description: 'Крутой чат'},
-    {name: 'Чат3', id: '4', description: 'Крутой чат'},
-  ]
+  const [TextChatsGP, setGroupChats] = useState([
+    // {name: 'Хакатон', id: '1', description: 'Крутой чат'},
+    // {name: 'Чат1', id: '2', description: 'Крутой чат'},
+    // {name: 'Чат2', id: '3', description: 'Крутой чат'},
+    // {name: 'Чат3', id: '4', description: 'Крутой чат'},
+  ])
 
   const TextChatsLC = [
     // {name: 'Твой чат', id: '5', description: 'Крутой чат'},
@@ -37,6 +46,16 @@ function Home() {
     // {name: 'Твой чат3', id: '8', description: 'Крутой чат'},
     // {name: 'Твой чат4', id: '9', description: 'Крутой чат'},
   ]
+
+  async function fetchChats()
+  {
+    const user = await getUserByToken(getToken())
+    const chatsIds = await getChatsForUser(1)
+    console.log(chatsIds)
+    // console.log(await getChatsForUser(user.id))
+    setGroupChats(prev => prev.concat(chatsIds))
+  }
+
 
   function Filter (arr) {
     return FilterSearch('name', inputValue, arr)

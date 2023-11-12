@@ -7,12 +7,18 @@ import { Icon28Search } from "@vkontakte/icons";
 import { FilterPopup } from "@/components/FilterPopup";
 import renderChats from "@/scripts/renderChats";
 import { FilterSearch } from "@/scripts/Filters";
+import { checkLogin } from "@/services/user.service";
 
 function searchPage () {
   const router = useRouter();
   const [inputValue, setInputValue] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
     
+  useEffect(() => {
+    if(checkLogin() === false) 
+      router.push('/auth')
+  }, [])
+
   const getData = (val) => {
     setInputValue(val.target.value)
     console.log(val.target.value)
