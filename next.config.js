@@ -47,16 +47,16 @@ const nextConfig = {
   //   return config;
   // },
 
-//   async rewrites() {
-//     return [
-//       {
-//         source: '/:path*',
-//         destination: `https://eventracker.ru/api/v1/:path*`,
-//         // destination: `http://localhost:5000/:path*`,
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `http://localhost:5000/:path*`,
+        // destination: `http://localhost:5000/:path*`,
         
-//       },
-//     ]
-// },
+      },
+    ]
+},
 }
 
 module.exports = nextConfig
