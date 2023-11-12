@@ -9,8 +9,6 @@ import { useEffect, useState } from 'react';
 import { Avatar, Message, MessageList, MessageSeparator, TypingIndicator } from '@chatscope/chat-ui-kit-react';
 import { Button, Input } from '@vkontakte/vkui';
 
-const eliotIco = require('../../public/dvAvatar.png')
-import dvAvatar from '../../public/dvAvatar.png'
 import { authUser, connectToChat, connectToSocket, createChat, sendMsg, socket } from '@/services/websocket.service';
 import { getUserByToken } from '@/services/user.service';
 
@@ -25,7 +23,20 @@ export default function ChatPage() {
   const [user, setUser] = useState()
 
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [fooEvents, setFooEvents] = useState([]);
+  const [chatId, setChatId] = useState([]);
+
+  useEffect(() => {
+    if(router)
+      setChatId(router.query.id)
+  }, [router])
+
+  useEffect(() => {
+    console.log(chatId)
+    if(chatId)
+    {
+      connect('9117492c-1f6e-4dba-9265-e524fa203b9c')
+    }
+   }, [chatId])
 
   async function fetchUser(token)
   {
@@ -37,16 +48,17 @@ export default function ChatPage() {
   }
 
   useEffect(()=> {
-    // if(token)
-  }, [])
+    
+    // if(token !== undefined)
+    //   connectToSocket()
+
+  }, [token])
 
   useEffect(() => {
-    connectToSocket()
 
     function onConnect() {
-      console.log('conn')
-      fetchUser('9117492c-1f6e-4dba-9265-e524fa203b9c')
-
+      console.log('conn: ' + token)
+      // fetchUser(token)
       setIsConnected(true);
     }
 
@@ -57,8 +69,8 @@ export default function ChatPage() {
 
     function onMsgRecieved(value) {
       console.log('got new message')
-      console.log(value + 'usr: ' + user)
-      setMessages(previous => [...previous, {...value, dir: value.user_id === user.id}]);
+      console.log(JSON.stringify(value) + 'usr: ' + user)
+      setMessages(previous => [...previous, value]);
     }
 
     socket.on('connect', onConnect);
@@ -73,23 +85,23 @@ export default function ChatPage() {
   }, []);
 
 
-//9117492c-1f6e-4dba-9265-e524fa203b9c
-
     async function connect(token)
     {
-      await authUser(token)
-      await createChat()
-      connectToChat(token, 1)
+
+      //could be uncommented
+      // await fetchUser(token)
+      // await authUser(token)
+      // await createChat()
+      // connectToChat(token, 2)
     }
 
     async function sendMessage(message)
     {
       if(!isConnected) console.log('could not send messages while disconnected');
 
-      // const user = await getUserByToken(token)
-      console.log(user)
+
       if(user)
-        sendMsg(1, message, user.id)
+        sendMsg(chatId, message, user.id)
       else
         console.log('error (no user)')
     }
@@ -121,13 +133,13 @@ export default function ChatPage() {
           </div>
         }
         ></HeaderComponents>
-        <div className='fixed top-24 left-0 w-full'>
+        {/* <div className='fixed top-24 left-0 w-full'>
           <Input placeholder='token' onChange={(e) => setToken(e.currentTarget.value)} value={token}></Input>
           <Button onClick={() => {connect(token)}}>auth</Button>
           <Button onClick={() => {socket.connect()}}>connect</Button>
           <Button onClick={() => {socket.disconnect()}}>disconn</Button>
 
-        </div>
+        </div> */}
         <div
           id="scrollableDiv"
           style={{
@@ -151,15 +163,15 @@ export default function ChatPage() {
             <br/>
             <TypingIndicator />
             <br/>
-            {messages?.reverse().map(msg => 
+            {[...messages]?.reverse().map(msg => 
               {return(
                 <Message
+                key={Math.random() * 1000}
                 model={{
                   message: msg.text,
-                  direction: 'outgoing',
+                  direction: msg.user_id === user?.id ? 'outgoing' : 'incoming',
                   position: "normal",
               }}
-              
               > 
                <Message.Header sender={msg.username} sentTime="just now" />
                 <Avatar src={'https://sun3-9.userapi.com/s/v1/ig2/QoqNWliOUCe5OTTDC7XSJi06pvDDpCZV1dPlarKNFTEM29XsBz6axCGDWrNi5bS0YYFXYtRdPaOKFR1_2uVq6JMV.jpg?size=200x200&quality=95&crop=159,392,598,598&ava=1'}/>
@@ -171,9 +183,152 @@ export default function ChatPage() {
                 direction: 'outgoing',
                 position: "normal",
             }}
+            /> 
+                        <Message
+              model={{
+                message: "Hello my friend",
+                direction: 'outgoing',
+                position: "normal",
+            }}
+            /> 
+                        <Message
+              model={{
+                message: "Hello my friend",
+                direction: 'outgoing',
+                position: "normal",
+            }}
+            /> 
+                        <Message
+              model={{
+                message: "Hello my friend",
+                direction: 'outgoing',
+                position: "normal",
+            }}
+            /> 
+                        <Message
+              model={{
+                message: "Hello my friend",
+                direction: 'outgoing',
+                position: "normal",
+            }}
+            /> 
+                        <Message
+              model={{
+                message: "Hello my friend",
+                direction: 'outgoing',
+                position: "normal",
+            }}
+            /> 
+                                    <Message
+              model={{
+                message: "Hello my friend",
+                direction: 'incoming',
+                position: "normal",
             
-            > 
-             <Message.Header sender="Dmitriy" sentTime="just now" />
+              }}></Message>                       
+          <Message
+            model={{
+              message: "Hello my friend",
+              direction: 'outgoing',
+              position: "normal",
+          }}
+          /> 
+                                  <Message
+            model={{
+              message: "Hello my friend",
+              direction: 'incoming',
+              position: "normal",
+          }}
+          />                         <Message
+          model={{
+            message: "Hello my friend",
+            direction: 'outgoing',
+            position: "normal",
+        }}
+        /> 
+                                <Message
+          model={{
+            message: "Hello my friend",
+            direction: 'incoming',
+            position: "normal",
+        }}
+        />                        
+       <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'outgoing',
+          position: "normal",
+      }}
+      /> 
+      <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      /> 
+             <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'outgoing',
+          position: "normal",
+      }}
+      /> 
+      <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      /> 
+            
+            <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'outgoing',
+          position: "normal",
+      }}
+      /> 
+      <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      /> 
+            
+            <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'outgoing',
+          position: "normal",
+      }}
+      /> 
+      <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      /> 
+            
+            <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'outgoing',
+          position: "normal",
+      }}
+      /> 
+      <Message
+        model={{
+          message: "Hello my friend",
+          direction: 'incoming',
+          position: "normal",
+      }}
+      /> 
+            
+            
+             {/* <Message.Header sender="Dmitriy" sentTime="just now" />
               <Avatar src={'https://sun3-9.userapi.com/s/v1/ig2/QoqNWliOUCe5OTTDC7XSJi06pvDDpCZV1dPlarKNFTEM29XsBz6axCGDWrNi5bS0YYFXYtRdPaOKFR1_2uVq6JMV.jpg?size=200x200&quality=95&crop=159,392,598,598&ava=1'}/>
             </Message>
 
@@ -186,7 +341,7 @@ export default function ChatPage() {
             > 
              <Message.Header sender="Dmitriy Vovchinskiy"/>
               <Avatar src={'https://sun3-9.userapi.com/s/v1/ig2/QoqNWliOUCe5OTTDC7XSJi06pvDDpCZV1dPlarKNFTEM29XsBz6axCGDWrNi5bS0YYFXYtRdPaOKFR1_2uVq6JMV.jpg?size=200x200&quality=95&crop=159,392,598,598&ava=1'}/>
-            </Message>
+            </Message> */}
 
           </InfiniteScroll> 
         </div>

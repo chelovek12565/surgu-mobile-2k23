@@ -12,7 +12,7 @@ export default function Layout({ children }) {
     <>
       {isClient ?     
       <div className='w-[100vw] bg-white flex flex-col items-center min-h-screen'>
-        <main className='self-center'>
+        <main className='self-center w-full'>
           {children}
         </main>
       </div>  

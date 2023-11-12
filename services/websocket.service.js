@@ -1,3 +1,4 @@
+import { API_URL } from '@/config';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
@@ -23,10 +24,10 @@ export function sendMsg(chatId, message, userId) {
 }
 
 export async function createChat() {
-  await axios.post('http://localhost:5000/new_chat', {name: 'Dmitrij', members: [1], admin_id: 1})
+  await axios.post(`${API_URL}/new_chat`, {name: '12', members: [1,2], admin_id: 1})
 }
 
 //'9117492c-1f6e-4dba-9265-e524fa203b9c'
 export async function authUser(token) {
-  await axios.post('http://localhost:5000/auth', {token: token})
+  await axios.post(`${API_URL}/auth`, {token: token})
 }
