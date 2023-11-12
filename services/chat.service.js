@@ -36,3 +36,18 @@ export async function getChatsForUser(userId)
     console.log(e)
   }
 }
+
+
+export async function getLast100Messages(iteration, chat_id)
+{
+  try
+  {
+    const chat = (await axios.post(`${API_URL}/last_messages`, {index: iteration, chat_id: chat_id})).data
+    console.log(chat)
+    return chat
+  }
+  catch (e)
+  {
+    console.log(e)
+  }
+}

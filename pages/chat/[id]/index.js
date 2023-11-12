@@ -7,22 +7,13 @@ import { ChatMessage } from '@/components/ChatMessage';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useEffect, useState } from 'react';
 import { Avatar, Message, MessageList, MessageSeparator, TypingIndicator } from '@chatscope/chat-ui-kit-react';
-import { Button, Input } from '@vkontakte/vkui';
-import { authUser, connectToChat, connectToSocket, createChat, sendMsg, socket } from '@/services/websocket.service';
-import { getUserByToken } from '@/services/user.service';
-import { HeaderModal } from '@/components/HeaderModal';
 import { authUser, connectToChat, connectToSocket, createChat, disconnectFromSocket, sendMsg, socket } from '@/services/websocket.service';
 import { checkLogin, getToken, getUserByToken } from '@/services/user.service';
+import { getLast100Messages } from '@/services/chat.service';
 
 
 export default function ChatPage() {
   const router = useRouter();
-
-  useEffect(() => {
-    if(checkLogin() === false) 
-      router.push('/auth')
-  }, [])
-  
   const [messages, setMessages] = useState([])
   const [hasMore, setMore] = useState(true)
   const [token, setToken] = useState()
@@ -30,6 +21,44 @@ export default function ChatPage() {
 
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [chatId, setChatId] = useState([]);
+
+
+  async function fetchMessages()
+  {
+    const msgs = await getLast100Messages(0, chatId);
+    if(msgs)
+    {
+      const msgsObj = []
+      msgs.forEach(aMsg => {
+        msgsObj.push({text: aMsg[1], user_id: aMsg[2]})
+      });
+      setMessages(msgsObj.reverse())
+
+    }
+  }
+
+  useEffect(() => {
+    
+
+    const exitingFunction = () => {
+      disconnectFromSocket()
+      console.log("exiting...");
+    };
+
+    router.events.on("routeChangeStart", exitingFunction);
+
+    return () => {
+      disconnectFromSocket()
+      console.log("unmounting component...");
+      router.events.off("routeChangeStart", exitingFunction);
+    };
+  }, []);
+
+  useEffect(() => {
+    if(checkLogin() === false) 
+      router.push('/auth')
+  }, [])
+  
 
   useEffect(() => {
     if(router)
@@ -40,6 +69,7 @@ export default function ChatPage() {
     console.log(chatId)
     if(chatId)
     {
+      fetchMessages()
       connect(getToken())
     }
    }, [chatId])
@@ -95,12 +125,13 @@ export default function ChatPage() {
 
     async function connect(token)
     {
-
       // could be uncommented
       // connectToChat()
       await fetchUser(token)
       await authUser(token)
       // await createChat()
+      console.log('connecting to chat')
+
       connectToChat(token, chatId)
     }
 
@@ -113,16 +144,6 @@ export default function ChatPage() {
         sendMsg(chatId, message, user.id)
       else
         console.log('error (no user)')
-    }
-
-    async function onSubmit({ email, password }) {
-        console.log(email +' p:' + password)
-        let res = await userService.Login({email: email, password: password})
-        if(res)
-        {
-            router.push("/")
-            router.reload()
-        }
     }
 
     return(    
