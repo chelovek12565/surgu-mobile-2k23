@@ -57,6 +57,7 @@ export function getToken()
 
 export function checkLogin()
 {
+  // return true
   if(getToken())
   {
     return true

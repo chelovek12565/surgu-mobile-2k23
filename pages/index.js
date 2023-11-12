@@ -84,7 +84,7 @@ function Home() {
         </div>
         <div className="flex flex-col">
           <h1 className="text-xl mb-2">Ваши задания</h1>
-          <button className="w-[95%] bg-grey bg-opacity-10 flex flex-row items-center self-center justify-center rounded-2xl">
+          <button onClick={() => router.push('/Tasks')} className="w-[95%] bg-grey bg-opacity-10 flex flex-row items-center self-center justify-center rounded-2xl">
             <h1>#</h1>
             <div className="mx-4 my-4">
               <h1 className="text-xl font-semibold" >Digital Chalange</h1>
